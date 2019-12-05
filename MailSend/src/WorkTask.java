@@ -8,15 +8,16 @@ import javax.mail.MessagingException;
 /*
  * 
  * Scinable 
- * 5초에 한 번씩 메일 전송 (한 번씩 전송하는데 총 보내야할 메일 40개 = 200초 = 3분정도)
- * 1시간 주기로 총 4회 반복
+ * 5초에 한 번씩 메일 전송 (한 번씩 전송하는데 총 보내야할 메일 90개 = 450초 = 7~8분정도)
+ * 30분 주기로 총 5회 반복
  * 
  */
 
 public class WorkTask extends TimerTask{
 
 	static int flag = 0;
-	final static int TOTAL_MAIL_NUMBER = 160; // 1회반복
+	final static int LOOP_NUMBER = 5; // 반복횟수 
+	final static int TOTAL_MAIL_NUMBER = Send.totalTO * Send.totalHOST * LOOP_NUMBER; // 총 보내야할 메일 개수
 	
 	@Override
 	public void run() {
@@ -52,10 +53,12 @@ public class WorkTask extends TimerTask{
 	            e.printStackTrace();
 	        }
 	        
-	        if(flag%40 == 0) {	// 한 바퀴 돌리고 나면 한시간 뒤에 동작.
+	        
+	        
+	        if(flag % (TOTAL_MAIL_NUMBER / LOOP_NUMBER) == 0) { // 한바퀴 돌린 후 
 				
 				try {
-					Thread.sleep(1000 * 60 * 60);
+					Thread.sleep(1000 * 60 * 30); // 한시간 뒤에 동작.
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
