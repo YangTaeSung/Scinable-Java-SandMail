@@ -21,53 +21,65 @@ public class WorkTask extends TimerTask{
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		
+		// TODO Auto-generated method stub
 		try {
 			
 			Send.send();
 			
 		} catch (UnsupportedEncodingException e) {
+			
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		} catch (MessagingException e) {
+			
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
 		
 	}
+	
 	
 	public static void main(String[] args) {
 	
 		while(flag < TOTAL_MAIL_NUMBER) {
 			
+			if(flag != 0 && flag % (TOTAL_MAIL_NUMBER / LOOP_NUMBER) == 0) { // 한바퀴 돌릴 때 마다 
+				
+				try {
+					
+					Thread.sleep(1000 * 60 * 30); // 한시간 뒤에 동작.
+					
+				} catch (InterruptedException e) {
+					
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					
+				}
+				
+			}
+			
 			TimerTask timerTask = new WorkTask();
 	        Timer timer = new Timer(true);
 	        timer.schedule(timerTask, 1000); // 1초 후에 메일 보내기
 	        flag++;
-	        System.out.println("TimerTask started");	         
+	        System.out.println(flag + "번째 메일 전송 시작...");	         
 	        
 	        try {
+	        	
 	            Thread.sleep(1000 * 5); // 5초 간격으로 while문 동작
+	            
 	        } catch (InterruptedException e) {
+	        	
 	            e.printStackTrace();
+	            
 	        }
 	        
-	        
-	        
-	        if(flag % (TOTAL_MAIL_NUMBER / LOOP_NUMBER) == 0) { // 한바퀴 돌린 후 
-				
-				try {
-					Thread.sleep(1000 * 60 * 30); // 한시간 뒤에 동작.
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-	        
 	        // timer.cancel(); // 타이머 종료 해제
-	        System.out.println("TimerTask cancelled");
+	        System.out.println("메일 전송 완료!");
+	        System.out.println("-------------------------------------------------");
 	        
 		}
 	

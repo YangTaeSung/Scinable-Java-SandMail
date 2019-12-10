@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 public class Send {
 	
-	static final String[] FROM = {"tempuser12@test1.com","tempuser12@test2.net"};
+    static final String[] FROM = {"tempuser12@test1.com","tempuser12@test2.net"};
     static final String FROMNAME = "From";
     static final String[] TO = {"*****@icloud.com","*******@hotmail.com", "*******@naver.com", "******@gmail.com"
 			"****@yahoo.com", "****@yahoo.com", "****@yahoo.com", "****@yahoo.com", "****@yahoo.com"};
@@ -22,9 +22,10 @@ public class Send {
     static final String SMTP_PASSWORD = "gmailPassword";
     
     static final String[] HOST = {"ip1","ip2","ip3",
-    								"ip4","ip5","ip6",
-    								"ip7","ip8","ip9","ip10"};
-    static final int PORT = 25; 
+    			"ip4","ip5","ip6",
+    			"ip7","ip8","ip9","ip10"};
+    
+    static final int PORT = 25;
     
     static final String SUBJECT = "소프트웨어학부 재학생 설문조사 참여요청";
     
@@ -43,6 +44,7 @@ public class Send {
     public static int totalTO = TO.length; // 9
     public static int totalHOST = HOST.length; // 10
     
+    
     public static void send() throws UnsupportedEncodingException, MessagingException {
     		
     		Properties props = System.getProperties();
@@ -57,6 +59,7 @@ public class Send {
     		if(HOSTloop > totalHOST/2 - 1) { // HOST[0] ~ HOST[4]까지는 ".com" 사용, HOST[5] ~ HOST[9]까지는 ".net" 사용
     			
     			FROMloop = 1;
+    			
     		} else {
     			
     			FROMloop = 0;
@@ -84,12 +87,11 @@ public class Send {
      
     			try {
     				
-    				System.out.println("Sending...");
-                
     				transport.connect(HOST[HOSTloop], SMTP_USERNAME, SMTP_PASSWORD);
     				transport.sendMessage(msg, msg.getAllRecipients());
      
-    				System.out.println("Email sent!");
+    				System.out.println("[" + "To : " + TO[TOloop] + "]" + "Email sent!");
+    				System.out.println("[" + "FROM : " + FROM[FROMloop] + "(" + HOST[HOSTloop] + ")" +"]" );
     				
     				if(HOSTloop != totalHOST - 1) {
     					
@@ -125,4 +127,3 @@ public class Send {
     	}
     
 }
-    
